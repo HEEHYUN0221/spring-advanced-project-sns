@@ -16,6 +16,8 @@ import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.expert.domain.user.enums.UserRole;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -71,7 +73,11 @@ public class JwtFilter implements Filter {
           httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "관리자 권한이 없습니다.");
           return;
         }
-        chain.doFilter(request, response);
+
+        ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(httpRequest);
+        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(httpResponse);
+
+        chain.doFilter(requestWrapper, responseWrapper);
         return;
       }
 
