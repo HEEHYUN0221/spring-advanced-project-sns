@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 
 import java.util.Objects;
+import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -24,15 +25,10 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class AdminTrace {
 
   private final Logger logger = LoggerFactory.getLogger(AdminTrace.class.getName());
-  private final StringHttpMessageConverter stringHttpMessageConverter;
-
-  public AdminTrace(StringHttpMessageConverter stringHttpMessageConverter) {
-    this.stringHttpMessageConverter = stringHttpMessageConverter;
-  }
-
 
   @Around("execution(public * org.example.expert.domain.comment.controller.CommentAdminController.deleteComment(..))||"
       + "execution(public * org.example.expert.domain.user.controller.UserAdminController.changeUserRole(..))")
@@ -70,6 +66,5 @@ public class AdminTrace {
     byte[] contentAsByteArray = wrapper.getContentAsByteArray();
     return new String(contentAsByteArray, wrapper.getCharacterEncoding());
   }
-
 
 }
