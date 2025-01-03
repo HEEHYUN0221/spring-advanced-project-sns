@@ -35,7 +35,6 @@ public class Todo extends Timestamped {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
-  @BatchSize(size=10)
   private User user;
 
   @OneToMany(mappedBy = "todo", cascade = CascadeType.REMOVE)
