@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CommentAdminService {
 
-    private final CommentRepository commentRepository;
+  private final CommentRepository commentRepository;
 
-    @Transactional
-    public void deleteComment(long commentId) {
-        commentRepository.deleteById(commentId);
-    }
+  @Transactional
+  public void deleteComment(long commentId) {
+    commentRepository.deleteById(commentId);
+  }
 }
