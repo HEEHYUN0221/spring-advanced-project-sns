@@ -36,10 +36,9 @@ public class ManagerService {
     Todo todo = todoRepository.findById(todoId)
         .orElseThrow(() -> new InvalidRequestException("Todo not found"));
 
-//    !ObjectUtils.nullSafeEquals(user.getId(), todo.getUser().getId())
-    if (todo.getUser() == null || user.getId() == null) {
+    if (!ObjectUtils.nullSafeEquals(user.getId(), todo.getUser())) {
       throw new InvalidRequestException("담당자를 등록하려고 하는 유저가 일정을 만든 유저가 유효하지 않습니다.");
-    }
+    }//일정에 담당자 지정->일정을 수정-> 일정을 만든사람이 수정가능 -> 일정을 만든사람이랑 현재 유저랑 동일한지.
 
     User managerUser = userRepository.findById(managerSaveRequest.getManagerUserId())
         .orElseThrow(() -> new InvalidRequestException("등록하려고 하는 담당자 유저가 존재하지 않습니다."));
