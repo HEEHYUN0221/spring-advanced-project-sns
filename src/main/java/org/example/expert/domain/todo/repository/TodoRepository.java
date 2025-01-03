@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface TodoRepository extends JpaRepository<Todo, Long> {
 
-  @EntityGraph(attributePaths = {"user"})
+  @Query(value = "SELECT t FROM Todo t JOIN FETCH t.user u ORDER BY t.modifiedAt DESC"
+      ,countQuery = "SELECT COUNT(t) FROM Todo t")
   Page<Todo> findAllByOrderByModifiedAtDesc(Pageable pageable);
 
   int countById(Long todoId);
